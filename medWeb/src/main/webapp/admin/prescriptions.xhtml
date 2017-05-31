@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="/templates/admin_template.xhtml">
+
+        <ui:define name="dataTable">
+            <p:commandButton onclick="PF('dlg2').show()" value="Добавить" actionListener="#{prescriptionPageBean.showAddDialog}"/>
+            <h:form id="tableForm">
+                <p:dataTable id="singleDT" var="item"
+                             value="#{prescriptionPageBean.allItems}"
+                             selectionMode="single"
+                             selection="#{prescriptionPageBean.selectedItem}"
+                             rowKey="#{item.id}">
+                    <p:ajax event="rowSelect" update="infoPanel" />
+                    <p:column headerText="Наименование лекарства">
+                        <h:outputText value="#{item.medicament.name}" />
+                    </p:column>
+                    <p:column headerText="Окончание приема">
+                        <h:outputText value="#{item.endDate}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+
+        <ui:define name="edit">
+            <h:outputText value="Id: #{prescriptionPageBean.selectedItem.id}" />
+                <h:form id="infoPanel">
+                    <p:panelGrid columns="2">
+
+                        <h:outputText value="Лекарство: " for="medMenu"/>
+                        <p:selectOneMenu id="medMenu" value="#{prescriptionPageBean.selectedMedicament}">
+                            <f:selectItems value="#{prescriptionPageBean.allMedicaments}" var="prescription1" itemLabel="#{prescription1.name}" itemValue="#{prescription1.name}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Описание: " for="prescrName"/>
+                        <p:inputTextarea id="prescrName" value="#{prescriptionPageBean.selectedItem.description}" label="name"/>
+
+                        <h:outputText value="Дата окончания приема: " for="endDate"/>
+                        <p:calendar id="endDate" value="#{prescriptionPageBean.selectedItem.endDate}" label="description"/>
+
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{prescriptionPageBean.saveSelected}" update="infoPanel tableForm" value="Сохранить"/>
+                    <p:commandButton actionListener="#{prescriptionPageBean.deleteSelected}" update="infoPanel tableForm" value="Удалить"/>
+                </h:form>
+        </ui:define>
+
+        <ui:define name="other">
+            <p:dialog id="addDialog" widgetVar="dlg2" modal="true" resizable="false" draggable="false" header="Добавить лекарство" appendTo="@(body)">
+                <h:form id="addForm">
+                    <p:panelGrid columns="2">
+
+                        <h:outputText value="Лекарство: " for="medMenuAdd"/>
+                        <p:selectOneMenu id="medMenuAdd" value="#{prescriptionPageBean.addedMedicament}">
+                            <f:selectItems value="#{prescriptionPageBean.allMedicaments}" var="prescription1" itemLabel="#{prescription1.name}" itemValue="#{prescription1.name}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Описание: " for="prescrNameAdd"/>
+                        <p:inputTextarea id="prescrNameAdd" value="#{prescriptionPageBean.addedItem.description}" label="name"/>
+
+                        <h:outputText value="Дата окончания приема: " for="endDateAdd"/>
+                        <p:calendar id="endDateAdd" value="#{prescriptionPageBean.addedItem.endDate}" label="description"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{prescriptionPageBean.persist}" value="Добавить" update="addForm tableForm" oncomplete="handleLoginRequest(args, 'dlg2');"/>
+                    <p:commandButton value="Отменить" update="addForm tableForm" onclick="PF('dlg2').hide()"/>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

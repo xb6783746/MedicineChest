@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <ui:composition template="/templates/admin_template.xhtml">
+
+        <ui:define name="dataTable">
+            <p:commandButton onclick="PF('dlg2').show()" value="Добавить" actionListener="#{itemPageBean.showAddDialog}"/>
+            <h:form id="tableForm">
+                <p:dataTable id="singleDT" var="item"
+                             value="#{itemPageBean.allItems}"
+                             selectionMode="single"
+                             selection="#{itemPageBean.selectedItem}"
+                             rowKey="#{item.id}">
+                    <p:ajax event="rowSelect" update="infoPanel" />
+                    <p:column headerText="Наименование лекарства">
+                        <h:outputText value="#{item.medicament.name}" />
+                    </p:column>
+                    <p:column headerText="Срок годности">
+                        <h:outputText value="#{item.expirationDate}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+
+        <ui:define name="edit">
+            <h:outputText value="Id: #{itemPageBean.selectedItem.id}" />
+                <h:form id="infoPanel">
+                    <p:panelGrid columns="2">
+
+                        <h:outputText value="Лекарство: " for="medMenu"/>
+                        <p:selectOneMenu id="medMenu" value="#{itemPageBean.selectedMedicament}">
+                            <f:selectItems value="#{itemPageBean.allMedicaments}" var="item1" itemLabel="#{item1.name}" itemValue="#{item1.name}" />
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Кол-во: " for="medName"/>
+                        <p:inputText id="medName" value="#{itemPageBean.selectedItem.number}" label="name"/>
+
+                        <h:outputText value="Срок годности: " for="medExpDate"/>
+                        <p:calendar id="medExpDate" value="#{itemPageBean.selectedItem.expirationDate}" label="description"/>
+
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{itemPageBean.saveSelected}" update="infoPanel tableForm" value="Сохранить"/>
+                    <p:commandButton actionListener="#{itemPageBean.deleteSelected}" update="infoPanel tableForm" value="Удалить"/>
+                </h:form>
+        </ui:define>
+
+        <ui:define name="other">
+            <p:dialog id="addDialog" widgetVar="dlg2" modal="true" resizable="false" draggable="false" header="Добавить лекарство" appendTo="@(body)">
+                <h:form id="addForm">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Лекарство: " for="medMenuAdd"/>
+                        <p:selectOneMenu id="medMenuAdd" value="#{itemPageBean.addedMedicament}" required="false" >
+                            <f:selectItems value="#{itemPageBean.allMedicaments}" var="item1" itemLabel="#{item1.name}" itemValue="#{item1.name}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Кол-во: " for="medNameAdd"/>
+                        <p:inputText id="medNameAdd" value="#{itemPageBean.addedItem.number}" label="name" required="true"/>
+
+                        <h:outputText value="Срок годности: " for="medExpDateAdd"/>
+                        <p:calendar id="medExpDateAdd" value="#{itemPageBean.addedItem.expirationDate}" label="description" required="true"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{itemPageBean.persist}" value="Добавить" update="addForm tableForm" oncomplete="handleLoginRequest(args, 'dlg2');"/>
+                    <p:commandButton value="Отменить" update="addForm tableForm" onclick="PF('dlg2').hide()"/>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

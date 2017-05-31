@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2-changeMedicament" author="vlad">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar(255)" />
+            <column name="password" type="varchar(255)" />
+            <column name="role" type="varchar(255)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3-addAdmin" author="vlad">
+        <insert tableName="users">
+            <column name="username">admin</column>
+            <column name="password">d033e22ae348aeb5660fc2140aec35850c4da997</column>
+            <column name="role">ADMIN</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/medPersistence/medPersistence.iml" filepath="$PROJECT_DIR$/medPersistence/medPersistence.iml" />
+      <module fileurl="file://$PROJECT_DIR$/medServices/medServices.iml" filepath="$PROJECT_DIR$/medServices/medServices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/medWeb/medWeb.iml" filepath="$PROJECT_DIR$/medWeb/medWeb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/medicaments.iml" filepath="$PROJECT_DIR$/medicaments.iml" />
+    </modules>
+  </component>
+</project>
