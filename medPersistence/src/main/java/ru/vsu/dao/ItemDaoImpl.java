@@ -2,6 +2,7 @@ package ru.vsu.dao;
 
 
 import ru.vsu.entities.ItemEntity;
+import ru.vsu.interfaces.ItemDao;
 
 import javax.ejb.Stateless;
 
@@ -11,9 +12,9 @@ import javax.ejb.Stateless;
  */
 
 @Stateless
-public class ItemDao extends AbstractDao<Long, ItemEntity> {
+public class ItemDaoImpl extends AbstractDao<Long, ItemEntity> implements ItemDao{
 
-    public ItemDao() {
+    public ItemDaoImpl() {
         super(ItemEntity.class);
 
     }

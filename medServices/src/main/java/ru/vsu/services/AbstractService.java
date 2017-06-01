@@ -1,12 +1,11 @@
 package ru.vsu.services;
 
-import ru.vsu.dao.AbstractDao;
 import ru.vsu.dto.AbstractDTO;
 import ru.vsu.entities.BaseEntity;
+import ru.vsu.interfaces.Dao;
 import ru.vsu.interfaces.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractService<TKey, TEntity extends BaseEntity<TKey>, TDto extends AbstractDTO<TKey>> implements Service<TKey, TDto> {
 
 
-    protected abstract AbstractDao<TKey, TEntity> getDao();
+    protected abstract Dao<TKey, TEntity> getDao();
 
     @Override
     public TDto byId(TKey id){

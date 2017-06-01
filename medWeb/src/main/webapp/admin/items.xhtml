@@ -56,15 +56,15 @@
                 <h:form id="addForm">
                     <p:panelGrid columns="2">
                         <h:outputText value="Лекарство: " for="medMenuAdd"/>
-                        <p:selectOneMenu id="medMenuAdd" value="#{itemPageBean.addedMedicament}" required="false" >
+                        <p:selectOneMenu id="medMenuAdd" value="#{itemPageBean.persistingMedicament}" required="false" >
                             <f:selectItems value="#{itemPageBean.allMedicaments}" var="item1" itemLabel="#{item1.name}" itemValue="#{item1.name}"/>
                         </p:selectOneMenu>
 
                         <h:outputText value="Кол-во: " for="medNameAdd"/>
-                        <p:inputText id="medNameAdd" value="#{itemPageBean.addedItem.number}" label="name" required="true"/>
+                        <p:inputText id="medNameAdd" value="#{itemPageBean.persistingItem.number}" label="name" required="true"/>
 
                         <h:outputText value="Срок годности: " for="medExpDateAdd"/>
-                        <p:calendar id="medExpDateAdd" value="#{itemPageBean.addedItem.expirationDate}" label="description" required="true"/>
+                        <p:calendar id="medExpDateAdd" value="#{itemPageBean.persistingItem.expirationDate}" label="description" required="true"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{itemPageBean.persist}" value="Добавить" update="addForm tableForm" oncomplete="handleLoginRequest(args, 'dlg2');"/>
                     <p:commandButton value="Отменить" update="addForm tableForm" onclick="PF('dlg2').hide()"/>

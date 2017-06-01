@@ -3,8 +3,7 @@ package ru.vsu.jsf.admin.beans;
 import ru.vsu.dto.MedicamentDTO;
 import ru.vsu.interfaces.MedicamentService;
 import ru.vsu.interfaces.Service;
-import ru.vsu.jsf.admin.abstractBean.AbstractAdminBean;
-import ru.vsu.services.MedicamentServiceImpl;
+import ru.vsu.jsf.admin.abstractBean.AbstractAdminPage;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -17,7 +16,7 @@ import java.io.Serializable;
 
 @ManagedBean
 @ViewScoped
-public class MedicamentPageBean extends AbstractAdminBean<Long, MedicamentDTO> implements Serializable {
+public class MedicamentPageBean extends AbstractAdminPage<Long, MedicamentDTO> implements Serializable {
 
     @Inject
     private MedicamentService medicamentService;
@@ -28,7 +27,7 @@ public class MedicamentPageBean extends AbstractAdminBean<Long, MedicamentDTO> i
     }
 
     @Override
-    protected MedicamentDTO getItem() {
+    protected MedicamentDTO create() {
         return new MedicamentDTO();
     }
 }

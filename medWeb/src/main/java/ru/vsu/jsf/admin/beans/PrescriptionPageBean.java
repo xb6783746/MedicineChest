@@ -4,8 +4,7 @@ import ru.vsu.dto.MedicamentDTO;
 import ru.vsu.dto.PrescriptionDTO;
 import ru.vsu.interfaces.PrescriptionService;
 import ru.vsu.interfaces.Service;
-import ru.vsu.jsf.admin.abstractBean.AbstractPageWithMedicamentSelect;
-import ru.vsu.services.PrescriptionServiceImpl;
+import ru.vsu.jsf.admin.abstractBean.AbstractPageWithMedicamentSelecting;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -18,7 +17,7 @@ import java.io.Serializable;
 
 @ManagedBean
 @ViewScoped
-public class PrescriptionPageBean extends AbstractPageWithMedicamentSelect<PrescriptionDTO> implements Serializable {
+public class PrescriptionPageBean extends AbstractPageWithMedicamentSelecting<PrescriptionDTO> implements Serializable {
 
 
     @Inject
@@ -31,7 +30,7 @@ public class PrescriptionPageBean extends AbstractPageWithMedicamentSelect<Presc
     }
 
     @Override
-    protected PrescriptionDTO getItem() {
+    protected PrescriptionDTO create() {
         return new PrescriptionDTO();
     }
 
@@ -42,10 +41,10 @@ public class PrescriptionPageBean extends AbstractPageWithMedicamentSelect<Presc
         this.selectedMedicament = selectedItem.getMedicament().getName();
     }
     @Override
-    public void setAddedItem(PrescriptionDTO addedItem) {
-        super.setAddedItem(addedItem);
+    public void setPersistingItem(PrescriptionDTO persistingItem) {
+        super.setPersistingItem(persistingItem);
 
-        this.addedMedicament = addedItem.getMedicament().getName();
+        this.persistingMedicament = persistingItem.getMedicament().getName();
     }
 
     @Override
@@ -60,11 +59,11 @@ public class PrescriptionPageBean extends AbstractPageWithMedicamentSelect<Presc
     @Override
     public void persist() {
 
-        MedicamentDTO medicamentDTO = medicamentService.byName(addedMedicament);
+        MedicamentDTO medicamentDTO = medicamentService.byName(persistingMedicament);
 
-        addedItem.setMedicament(medicamentDTO);
+        persistingItem.setMedicament(medicamentDTO);
 
-        prescriptionService.add(addedItem);
+        prescriptionService.add(persistingItem);
     }
 
 }

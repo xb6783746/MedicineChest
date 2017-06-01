@@ -24,7 +24,9 @@ public abstract class AbstractApi<TKey, TDto extends AbstractDTO<TKey>> {
         TDto dto = getService().byId(id);
 
         if (dto == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new WebApplicationException(
+                    Response.status(Response.Status.NOT_FOUND)
+                    .entity("Item is not exists").build());
         }
 
         return dto;
@@ -34,9 +36,7 @@ public abstract class AbstractApi<TKey, TDto extends AbstractDTO<TKey>> {
     @Produces(MediaType.APPLICATION_JSON)
     public List<TDto> getAll() {
 
-        List<TDto> list = getService().all();
-
-        return list;
+        return getService().all();
     }
 
     @DELETE

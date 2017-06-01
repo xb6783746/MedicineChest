@@ -1,12 +1,14 @@
 package ru.vsu.services;
 
-import ru.vsu.dao.AbstractDao;
-import ru.vsu.dao.PrescriptionDao;
+import ru.vsu.dao.PrescriptionDaoImpl;
 import ru.vsu.dto.MedicamentDTO;
 import ru.vsu.dto.PrescriptionDTO;
 import ru.vsu.entities.MedicamentEntity;
 import ru.vsu.entities.PrescriptionEntity;
+import ru.vsu.interfaces.Dao;
+import ru.vsu.interfaces.PrescriptionDao;
 import ru.vsu.interfaces.PrescriptionService;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -25,13 +27,17 @@ public class PrescriptionServiceImpl extends AbstractService<Long, PrescriptionE
 
 
     @Override
-    protected AbstractDao<Long, PrescriptionEntity> getDao() {
+    protected Dao<Long, PrescriptionEntity> getDao() {
 
         return _dao;
     }
 
     @Override
     protected PrescriptionDTO buildDTO(PrescriptionEntity entity) {
+
+        if(entity == null){
+            return null;
+        }
 
         MedicamentDTO medicamentDTO = new MedicamentDTO(
                 entity.getMedicamentByMedicamentId().getId(),
@@ -49,6 +55,10 @@ public class PrescriptionServiceImpl extends AbstractService<Long, PrescriptionE
     @Override
     protected PrescriptionEntity buildEntity(PrescriptionDTO dto) {
 
+        if(dto == null){
+            return null;
+        }
+
         MedicamentEntity medicamentEntity = new MedicamentEntity(
                 dto.getMedicament().getId(),
                 dto.getMedicament().getName(),
@@ -64,6 +74,6 @@ public class PrescriptionServiceImpl extends AbstractService<Long, PrescriptionE
     @Override
     public List<PrescriptionDTO> getEnded() {
         //TODO
-        return null;
+        throw new NotImplementedException();
     }
 }

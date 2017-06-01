@@ -28,13 +28,7 @@ public class MedicamentConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
 
-        List<MedicamentDTO> list = medicamentService.all();
-
-        return list
-                .stream()
-                .filter(x -> x.getName().equals(s))
-                .findAny()
-                .orElse(new MedicamentDTO());
+        return medicamentService.byName(s);
 
     }
 

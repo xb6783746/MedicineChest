@@ -3,7 +3,6 @@ package ru.vsu.jsf.admin.abstractBean;
 import ru.vsu.dto.AbstractDTO;
 import ru.vsu.dto.MedicamentDTO;
 import ru.vsu.interfaces.MedicamentService;
-import ru.vsu.services.MedicamentServiceImpl;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -11,13 +10,13 @@ import java.util.List;
 /**
  * Created by Влад on 19.04.2017.
  */
-public abstract class AbstractPageWithMedicamentSelect<T extends AbstractDTO<Long>> extends AbstractAdminBean<Long, T> {
+public abstract class AbstractPageWithMedicamentSelecting<T extends AbstractDTO<Long>> extends AbstractAdminPage<Long, T> {
 
     @Inject
     protected MedicamentService medicamentService;
 
     protected String selectedMedicament;
-    protected String addedMedicament;
+    protected String persistingMedicament;
 
 
     public String getSelectedMedicament() {
@@ -27,11 +26,11 @@ public abstract class AbstractPageWithMedicamentSelect<T extends AbstractDTO<Lon
         this.selectedMedicament = selectedMedicament;
     }
 
-    public String getAddedMedicament() {
-        return addedMedicament;
+    public String getPersistingMedicament() {
+        return persistingMedicament;
     }
-    public void setAddedMedicament(String addedMedicament) {
-        this.addedMedicament = addedMedicament;
+    public void setPersistingMedicament(String persistingMedicament) {
+        this.persistingMedicament = persistingMedicament;
     }
 
     public List<MedicamentDTO> getAllMedicaments(){

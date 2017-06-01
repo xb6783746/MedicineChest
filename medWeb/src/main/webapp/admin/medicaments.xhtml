@@ -48,10 +48,10 @@
                 <h:form id="addForm">
                     <p:panelGrid columns="2">
                         <p:outputLabel value="Наименование" for="name" />
-                        <p:inputText id="name"  required="true" value="#{medicamentPageBean.addedItem.name}" />
+                        <p:inputText id="name"  required="true" value="#{medicamentPageBean.persistingItem.name}" />
 
                         <p:outputLabel value="Описание" for="descr" />
-                        <p:inputTextarea id="descr"  required="true" value="#{medicamentPageBean.addedItem.description}" />
+                        <p:inputTextarea id="descr"  required="true" value="#{medicamentPageBean.persistingItem.description}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{medicamentPageBean.persist}" value="Добавить" update="addForm tableForm" oncomplete="handleLoginRequest(args, 'dlg2');"/>
                     <p:commandButton value="Отменить" update="addForm tableForm" onclick="PF('dlg2').hide()"/>

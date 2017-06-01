@@ -2,6 +2,7 @@ package ru.vsu.dao;
 
 
 import ru.vsu.entities.PrescriptionEntity;
+import ru.vsu.interfaces.PrescriptionDao;
 
 import javax.ejb.Stateless;
 
@@ -10,10 +11,10 @@ import javax.ejb.Stateless;
  */
 
 @Stateless
-public class PrescriptionDao extends AbstractDao<Long, PrescriptionEntity> {
+public class PrescriptionDaoImpl extends AbstractDao<Long, PrescriptionEntity> implements PrescriptionDao{
 
 
-    public PrescriptionDao() {
+    public PrescriptionDaoImpl() {
         super(PrescriptionEntity.class);
 
     }

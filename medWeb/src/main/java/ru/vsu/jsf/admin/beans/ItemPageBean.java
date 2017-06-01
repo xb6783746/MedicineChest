@@ -4,7 +4,7 @@ import ru.vsu.dto.ItemDTO;
 import ru.vsu.dto.MedicamentDTO;
 import ru.vsu.interfaces.ItemService;
 import ru.vsu.interfaces.Service;
-import ru.vsu.jsf.admin.abstractBean.AbstractPageWithMedicamentSelect;
+import ru.vsu.jsf.admin.abstractBean.AbstractPageWithMedicamentSelecting;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 
 @ManagedBean
 @ViewScoped
-public class ItemPageBean extends AbstractPageWithMedicamentSelect<ItemDTO> implements Serializable {
+public class ItemPageBean extends AbstractPageWithMedicamentSelecting<ItemDTO> implements Serializable {
 
 
     @Inject
@@ -29,7 +29,7 @@ public class ItemPageBean extends AbstractPageWithMedicamentSelect<ItemDTO> impl
     }
 
     @Override
-    protected ItemDTO getItem() {
+    protected ItemDTO create() {
         return new ItemDTO();
     }
 
@@ -49,19 +49,19 @@ public class ItemPageBean extends AbstractPageWithMedicamentSelect<ItemDTO> impl
     }
 
     @Override
-    public void setAddedItem(ItemDTO addedItem) {
-        super.setAddedItem(addedItem);
+    public void setPersistingItem(ItemDTO persistingItem) {
+        super.setPersistingItem(persistingItem);
 
-        this.addedMedicament = addedItem.getMedicament().getName();
+        this.persistingMedicament = persistingItem.getMedicament().getName();
     }
 
     @Override
     public void persist() {
 
-        MedicamentDTO medicamentDTO = medicamentService.byName(addedMedicament);
+        MedicamentDTO medicamentDTO = medicamentService.byName(persistingMedicament);
 
-        addedItem.setMedicament(medicamentDTO);
+        persistingItem.setMedicament(medicamentDTO);
 
-        itemService.add(addedItem);
+        itemService.add(persistingItem);
     }
 }

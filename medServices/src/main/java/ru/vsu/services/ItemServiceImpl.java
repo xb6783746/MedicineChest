@@ -5,13 +5,17 @@ import ru.vsu.dto.ItemDTO;
 import ru.vsu.dto.MedicamentDTO;
 import ru.vsu.entities.ItemEntity;
 import ru.vsu.entities.MedicamentEntity;
+import ru.vsu.exceptions.MedicamentNotFoundException;
+import ru.vsu.interfaces.Dao;
+import ru.vsu.interfaces.ItemDao;
 import ru.vsu.interfaces.ItemService;
 import ru.vsu.interfaces.MedicamentService;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -28,29 +32,36 @@ public class ItemServiceImpl extends AbstractService<Long, ItemEntity, ItemDTO> 
     private MedicamentService medicamentService;
 
     @Override
-    protected AbstractDao<Long, ItemEntity> getDao() {
+    protected Dao<Long, ItemEntity> getDao() {
         return _dao;
     }
 
-    public void add(int count, Date expDate, String medicamentName) {
+    public void add(int count, Date expDate, String medicamentName)
+            throws MedicamentNotFoundException {
 
-        MedicamentDTO tmp = medicamentService.byName(medicamentName);
+        MedicamentDTO medicament = medicamentService.byName(medicamentName);
 
-        if(tmp != null){
-
-            ItemDTO item = new ItemDTO(null, expDate, count, tmp);
-            add(item);
+        if(medicament == null){
+            throw new MedicamentNotFoundException(medicamentName);
         }
+
+        ItemDTO item = new ItemDTO(null, expDate, count, medicament);
+        add(item);
 
     }
 
     @Override
-    public void getExpired() {
+    public List<ItemDTO> getExpired() {
         //TODO
+        throw new NotImplementedException();
     }
 
     @Override
     protected ItemDTO buildDTO(ItemEntity entity) {
+
+        if(entity == null){
+            return null;
+        }
 
         MedicamentDTO medicament = new MedicamentDTO(
                 entity.getMedicament().getId(),
@@ -66,6 +77,10 @@ public class ItemServiceImpl extends AbstractService<Long, ItemEntity, ItemDTO> 
 
     @Override
     protected ItemEntity buildEntity(ItemDTO dto) {
+
+        if(dto == null){
+            return null;
+        }
 
         MedicamentEntity medicamentEntity = new MedicamentEntity(
                 dto.getMedicament().getId(),

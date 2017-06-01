@@ -57,15 +57,15 @@
                     <p:panelGrid columns="2">
 
                         <h:outputText value="Лекарство: " for="medMenuAdd"/>
-                        <p:selectOneMenu id="medMenuAdd" value="#{prescriptionPageBean.addedMedicament}">
+                        <p:selectOneMenu id="medMenuAdd" value="#{prescriptionPageBean.persistingMedicament}">
                             <f:selectItems value="#{prescriptionPageBean.allMedicaments}" var="prescription1" itemLabel="#{prescription1.name}" itemValue="#{prescription1.name}"/>
                         </p:selectOneMenu>
 
                         <h:outputText value="Описание: " for="prescrNameAdd"/>
-                        <p:inputTextarea id="prescrNameAdd" value="#{prescriptionPageBean.addedItem.description}" label="name"/>
+                        <p:inputTextarea id="prescrNameAdd" value="#{prescriptionPageBean.persistingItem.description}" label="name"/>
 
                         <h:outputText value="Дата окончания приема: " for="endDateAdd"/>
-                        <p:calendar id="endDateAdd" value="#{prescriptionPageBean.addedItem.endDate}" label="description"/>
+                        <p:calendar id="endDateAdd" value="#{prescriptionPageBean.persistingItem.endDate}" label="description"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{prescriptionPageBean.persist}" value="Добавить" update="addForm tableForm" oncomplete="handleLoginRequest(args, 'dlg2');"/>
                     <p:commandButton value="Отменить" update="addForm tableForm" onclick="PF('dlg2').hide()"/>

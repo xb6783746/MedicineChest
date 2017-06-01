@@ -1,6 +1,7 @@
 package ru.vsu.rest.services;
 
 import ru.vsu.dto.ItemDTO;
+import ru.vsu.exceptions.MedicamentNotFoundException;
 import ru.vsu.interfaces.ItemService;
 import ru.vsu.interfaces.MedicamentService;
 import ru.vsu.interfaces.Service;
@@ -46,7 +47,17 @@ public class ItemApi extends AbstractApi<Long, ItemDTO> {
 
         } catch (ParseException e) {
             e.printStackTrace();
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new WebApplicationException(
+                    Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Date format error").build()
+            );
+
+        } catch (MedicamentNotFoundException e) {
+            e.printStackTrace();
+            throw new WebApplicationException(
+                    Response.status(Response.Status.NOT_FOUND)
+                    .entity("Medicament with specified name is not exists").build()
+            );
         }
 
     }

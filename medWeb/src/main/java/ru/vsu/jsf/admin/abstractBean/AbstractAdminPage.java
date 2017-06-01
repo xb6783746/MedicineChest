@@ -3,8 +3,6 @@ package ru.vsu.jsf.admin.abstractBean;
 import ru.vsu.dto.AbstractDTO;
 import ru.vsu.interfaces.Service;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,14 +10,14 @@ import java.util.List;
  * Created by Влад on 18.04.2017.
  */
 
-public abstract class AbstractAdminBean<TKey, TDto extends AbstractDTO<TKey>> implements Serializable{
+public abstract class AbstractAdminPage<TKey, TDto extends AbstractDTO<TKey>> implements Serializable{
 
 
     protected abstract Service<TKey, TDto> getService();
-    protected abstract TDto getItem();
+    protected abstract TDto create();
 
     protected TDto selectedItem;
-    protected TDto addedItem;
+    protected TDto persistingItem;
 
     public List<TDto> getAllItems(){
 
@@ -34,11 +32,11 @@ public abstract class AbstractAdminBean<TKey, TDto extends AbstractDTO<TKey>> im
         this.selectedItem = selectedItem;
     }
 
-    public TDto getAddedItem() {
-        return addedItem;
+    public TDto getPersistingItem() {
+        return persistingItem;
     }
-    public void setAddedItem(TDto addedItem) {
-        this.addedItem = addedItem;
+    public void setPersistingItem(TDto persistingItem) {
+        this.persistingItem = persistingItem;
     }
 
     public void saveSelected(){
@@ -48,16 +46,16 @@ public abstract class AbstractAdminBean<TKey, TDto extends AbstractDTO<TKey>> im
     public void deleteSelected(){
 
         getService().delete(selectedItem.getId());
-        selectedItem = getItem();
+        selectedItem = create();
     }
 
     public void showAddDialog(){
-        addedItem = getItem();
+        persistingItem = create();
     }
 
     public void persist(){
 
-        getService().add(addedItem);
+        getService().add(persistingItem);
     }
 
 
